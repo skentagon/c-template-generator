@@ -7,11 +7,10 @@ This generates C code like template in c++, which allows to use STL code in C.
 ## Demo
 
 ## Requirement
-Minimum requirement is as follows:
 * php
-To compile and use GUI wrapper, the following modules are requrired.
+To compile and use CUI wrapper, the following modules are required in addition to php.
+To compile and use GUI wrapper, the following modules are required.
 * cmake
-* g++
 * glfw
 
 ## Usage
