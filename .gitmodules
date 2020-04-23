@@ -1,3 +1,6 @@
 [submodule "generator/util"]
 	path = generator/util
 	url = https://github.com/skentagon/util.git
+[submodule "generator/microui"]
+	path = generator/microui
+	url = https://github.com/rxi/microui.git
