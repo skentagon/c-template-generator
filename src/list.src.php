@@ -1,4 +1,3 @@
-
 <?php
   $name = 'list';
   include('common/config.php');
@@ -10,21 +9,9 @@
 /*
 
 list samples
-  https://atcoder.jp/contests/abc066/submissions/11643502
+  https://atcoder.jp/contests/abc066/submissions/12287482
 
 */
-
-<?php
-  $prms->push("list_item_$m");
-  $prms->push("list_$m");
-  $prms->push("list_item_ptr_$m");
-  for( $i=0; $i < 3; $i++ ){
-    include('utility.src.php');
-    $prms->pop();
-  }
-  $m = $mnemonic =  $prms->mnemonic();
-  $t = $type = $prms->type();
-?>
 
 #include <stdlib.h>
 #include <stddef.h>
@@ -58,7 +45,9 @@ typedef struct list_item_<?=$m?>_internal__* list_item_ptr_<?=$m?>;
   $t = $type = $prms->type();
 ?>
 
-void list_constructor_<?=$m?>( list_<?=$m?>* l ){ l->front = l->back = NULL; l->size = 0; return l; };
+void list_constructor_<?=$m?>( list_<?=$m?>* l ){ l->front = l->back = NULL; l->size = 0; };
+void list_constructor_n_<?=$m?>( list_<?=$m?>* l, size_t n, <?=$t?>* t = NULL );
+void list_constructor_range_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* begin, list_item_<?=$m?>* end );
 void list_deconstructor_<?=$m?>( list_<?=$m?>* l );
 bool list_empty_<?=$m?>( list_<?=$m?>* l ){ return l->front == NULL; };
 size_t list_size_<?=$m?>( list_<?=$m?>* l ){ return l->size; };
@@ -89,13 +78,19 @@ size_t list_remove_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* itm ){ list_eras
 //size_t list_remove_if_<?=$m?>( list_<?=$m?>* l, bool(*f)(list_item_<?=$m?>*) );
 //list_<?=$m?>* list_unique_<?=$m?>( list_<?=$m?>* l );
 //list_<?=$m?>* list_unique_if_<?=$m?>( list_<?=$m?>* l, bool(*f)(list_item_<?=$m?>*,list_item_<?=$m?>*) );
-//list_<?=$m?>* list_merge_<?=$m?>( list_<?=$m?>* l, list_<?=$m?>* r );
+list_<?=$m?>* list_merge_<?=$m?>( list_<?=$m?>* l, list_<?=$m?>* r );
 //list_<?=$m?>* list_merge_if_<?=$m?>( list_<?=$m?>* l, list_<?=$m?>* r, bool(*f)(list_int_item*,list_int_item*) );
-//list_<?=$m?>* list_sort_<?=$m?>( list_<?=$m?>* l );
+list_<?=$m?>* list_sort_<?=$m?>( list_<?=$m?>* l );
 //list_<?=$m?>* list_sort_if_<?=$m?>( list_<?=$m?>* l, bool(*f)(list_item_<?=$m?>*,list_item_<?=$m?>*) );
 //list_<?=$m?>* list_reverse_<?=$m?>( list_<?=$m?>* l );
-void swap_list_<?=$m?>( list_<?=$m?>* l, list_<?=$m?>* r ){ swap_list_<?=$m?>(l,r); }
 
+void list_constructor_range_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* begin, list_item_<?=$m?>* end ){
+  list_constructor_<?=$m?>(l);
+  for( list_item_<?=$m?>* t=begin; t!=end; t=t->next ){
+    list_push_back_<?=$m?>(l,&t->value)
+  }
+}
+void list_destructor_<?=$m?>( list_<?=$m?>* l ){ list_clear_<?=$m?>(l); }
 void list_deconstructor_<?=$m?>( list_<?=$m?>* l ){ list_clear_<?=$m?>(l); }
 list_<?=$m?>* list_resize_<?=$m?>( list_<?=$m?>* l, size_t sz ){
   while( list_size_<?=$m?>(l) > sz ){ list_erase_<?=$m?>(l,list_back_<?=$m?>(l)); }
@@ -224,5 +219,7 @@ list_<?=$m?>* list_splice_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* pos, list
   }
   return l;
 };
+list_<?=$m?>* list_sort_<?=$m?>( list_<?=$m?>* l ){}
+list_<?=$m?>* list_merge_<?=$m?>( list_<?=$m?>* l, list_<?=$m?>* r ){}
 
 #endif

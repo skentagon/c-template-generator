@@ -5,7 +5,7 @@ require_once('stack_prm.php');
 
 if ( !isset($prms) ){
 
-  printTopHeader()
+  printTopHeader();
 
   if ( count($argv) == 1 ){
     $default_type = "long long";

@@ -1,7 +1,7 @@
 
 <?php
   $name = 'list';
-  include('config.php');
+  include('common/config.php');
 ?>
 
 #ifndef C_UTILITY_<?=$m?>_GENERATOR_HEADER_INCLUDED
