@@ -46,7 +46,7 @@ typedef struct list_item_<?=$m?>_internal__* list_item_ptr_<?=$m?>;
 ?>
 
 void list_constructor_<?=$m?>( list_<?=$m?>* l ){ l->front = l->back = NULL; l->size = 0; };
-void list_constructor_n_<?=$m?>( list_<?=$m?>* l, size_t n, <?=$t?>* t = NULL );
+//void list_constructor_n_<?=$m?>( list_<?=$m?>* l, size_t n, <?=$t?>* t = NULL );
 void list_constructor_range_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* begin, list_item_<?=$m?>* end );
 void list_deconstructor_<?=$m?>( list_<?=$m?>* l );
 bool list_empty_<?=$m?>( list_<?=$m?>* l ){ return l->front == NULL; };
@@ -87,7 +87,7 @@ list_<?=$m?>* list_sort_<?=$m?>( list_<?=$m?>* l );
 void list_constructor_range_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* begin, list_item_<?=$m?>* end ){
   list_constructor_<?=$m?>(l);
   for( list_item_<?=$m?>* t=begin; t!=end; t=t->next ){
-    list_push_back_<?=$m?>(l,&t->value)
+    list_push_back_<?=$m?>(l,&t->value);
   }
 }
 void list_destructor_<?=$m?>( list_<?=$m?>* l ){ list_clear_<?=$m?>(l); }
@@ -126,6 +126,7 @@ list_item_<?=$m?>* list_push_front_empty_<?=$m?>( list_<?=$m?>* l ){
     l->front = l->front->prev;
     l->front->prev = NULL;
   }
+  ++l->size;
   return t;
 };
 list_item_<?=$m?>* list_push_back_empty_<?=$m?>( list_<?=$m?>* l ){
@@ -140,6 +141,7 @@ list_item_<?=$m?>* list_push_back_empty_<?=$m?>( list_<?=$m?>* l ){
     l->back = l->back->next;
     l->back->next = NULL;
   }
+  ++l->size;
   return t;
 };
 list_item_<?=$m?>* list_insert_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* itm, <?=$t?>* p ){
@@ -171,6 +173,7 @@ list_item_<?=$m?>* list_erase_<?=$m?>( list_<?=$m?>* l, list_item_<?=$m?>* itm )
   if ( itm->prev ){
     if ( itm->next ){
       itm->prev->next = itm->next;
+      itm->next->prev = itm->prev;
       t = itm->next;
     } else {
       itm->prev->next = NULL;
